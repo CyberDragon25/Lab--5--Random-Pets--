@@ -3,6 +3,9 @@ package edu.iastate.shubham8.random_pets
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
@@ -14,6 +17,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         getDogImageURL()
         Log.d("petImageURL", "pet image URL set")
+        val getRandomPet = findViewById<Button>(R.id.petButton)
+        val petImage = findViewById<ImageView>(R.id.petImage)
+        getNextImage(getRandomPet, petImage)
+    }
+
+    private fun getNextImage(button: Button, imageView: ImageView) {
+        button.setOnClickListener {
+            getDogImageURL()
+
+            Glide.with(this)
+                .load(petImageURL)
+                .fitCenter()
+                .into(imageView)
+        }
     }
 
     private fun getDogImageURL() {
